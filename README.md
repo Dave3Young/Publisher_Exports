@@ -7,12 +7,13 @@ PublisherPubToHTMLPNGfilesFinal.ps1 = This PowerShell script will process all .p
    
     for current folder only
     .\PublisherPubToHTMLPNGfilesFinal.ps1 -Filter "*.pub"
-
-   or
-   
+    
+  or
+  
     for recursive folder processing
     .\PublisherPubToHTMLPNGfilesFinal.ps1 -Filter "*.pub" -Recurse
 
+  
 PublisherPubToPdf.ps1 = This PowerShell script will read all .pub files in a folder and export to a PDF file
 
       Open a PowerShell session and type
