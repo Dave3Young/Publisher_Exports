@@ -24,6 +24,6 @@ PublisherPubToPdf.ps1 = This PowerShell script will read all .pub files in a fol
     
         .\PublisherPubToPDF.ps1 -Filter "*.pub" -Recurse
 
-Disclaimer: This script is provided for educational and informational purposes only and is offered "as is" with no warranty or guarantee of any kind.
-    By using this script, you accept full responsibility for any consequences, including but not limited to data loss, system instability, or unintended results.
+Disclaimer: These scripts are provided for educational and informational purposes only and is offered "as is" with no warranty or guarantee of any kind.
+    By using these scripts, you accept full responsibility for any consequences, including but not limited to data loss, system instability, or unintended results.
     Use at your own risk.
