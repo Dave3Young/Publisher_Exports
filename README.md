@@ -13,6 +13,9 @@ PublisherPubToHTMLPNGfilesFinal.ps1 = This PowerShell script will process all .p
         for recursive folder processing
             .\PublisherPubToHTMLPNGfilesFinal.ps1 -Filter "*.pub" -Recurse
 
+Converting to PowerPoint or Canva? Use the stage 1 script at [PublisherToPPTX](https://github.com/Dave3Young/PublisherToPPTX) instead.
+It writes the same HTML and image files, plus the page size and text layout files that its stage 2 needs to build a .pptx.
+
   
 PublisherPubToPdf.ps1 = This PowerShell script will read all .pub files in a folder and export to a PDF file
 
