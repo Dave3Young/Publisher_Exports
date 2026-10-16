@@ -2,7 +2,7 @@
 **Converting to PowerPoint or Canva?** Use the stage 1 script at [PublisherToPPTX](https://github.com/Dave3Young/PublisherToPPTX) instead.
 It writes the same HTML and image files, plus the page size and text layout files that its stage 2 needs to build a .pptx.
 
-Scripts for exporting Publisher files to PDF format or extracting HTML and the original Images files
+These Scripts export Publisher files to PDF format or extract HTML and the original Image files
 
 PublisherPubToHTMLPNGfilesFinal.ps1 = This PowerShell script will process all .pub files in a folder and extract HTML and Images files into a new subfolder 
 
