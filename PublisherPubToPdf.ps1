@@ -1,5 +1,5 @@
 <# 
-Disclaimer: This script is provided for educational and informational purposes only and is offered "as is" with no warranty or guarantee of any kind.
+Disclaimer: This script is provided "as is" with no warranty or guarantee of any kind.
     By using this script, you accept full responsibility for any consequences, including but not limited to data loss, system instability, or unintended results.
     Use at your own risk.
 
@@ -72,6 +72,17 @@ try {
 
             if (Test-Path $pdfFilePath) {
                 Write-Error "PDF file already exists: $pdfFilePath"
+                $failCount++
+                continue
+            }
+
+            # Publisher 2010 crashes when it saves to a path of 260 characters
+            # or more, which loses the rest of the batch. Skip it with a clear error.
+            if ($pdfFilePath.Length -gt 259) {
+                Write-Error ("PDF path would be too long for Publisher " +
+                    "($($pdfFilePath.Length) characters; the limit is 259). " +
+                    "Move or rename the publication so the folder path is " +
+                    "$($pdfFilePath.Length - 259) characters shorter: $fileFullName")
                 $failCount++
                 continue
             }

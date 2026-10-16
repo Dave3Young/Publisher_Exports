@@ -1,5 +1,5 @@
 <#
-Disclaimer: This script is provided for educational and informational purposes only and is offered "as is" with no warranty or guarantee of any kind.
+Disclaimer: This script is provided "as is" with no warranty or guarantee of any kind.
     By using this script, you accept full responsibility for any consequences, including but not limited to data loss, system instability, or unintended results.
     Use at your own risk.
 
@@ -191,7 +191,7 @@ function Export-PublisherPictures
                         "Exporting image $($PictureCounter.Value) from $PageLabel $PageNumber..."
 
                     $shape.SaveAsPicture(
-                        $pngFilePath,
+                        [string]$pngFilePath,
                         $PNG_RESOLUTION
                     )
 
@@ -486,7 +486,7 @@ function Export-PublisherTextShapes
                     try {
 
                         $shape.SaveAsPicture(
-                            $pngFilePath,
+                            [string]$pngFilePath,
                             $PNG_RESOLUTION
                         )
 
@@ -585,7 +585,9 @@ try {
         $page = $null
 
         $fileFullName = $file.FullName
-        $baseName = $file.BaseName
+        # Trimmed: Windows can't hold a folder or file name ending in a
+        # space, so "My Flyer .pub" would otherwise fail to export.
+        $baseName = $file.BaseName.Trim()
         $sourceDirectory = $file.DirectoryName
 
         # --------------------------------------------------------
@@ -601,6 +603,28 @@ try {
         Write-Output "Source: $fileFullName"
         Write-Output "Output: $outputFolder"
         Write-Output "=============================================="
+
+        # --------------------------------------------------------
+        # Publisher 2010 crashes (MSVCR90 invalid parameter) when
+        # it saves to a path of 260 characters or more, which loses
+        # the rest of the batch. Skip it with a clear error.
+        # --------------------------------------------------------
+
+        $longestPath = Join-Path `
+            $outputFolder `
+            ($baseName + "_masterpage_000_image_000.png")
+
+        if ($longestPath.Length -gt 259) {
+
+            Write-Error ("Output paths would be too long for Publisher " +
+                "($($longestPath.Length) characters; the limit is 259). " +
+                "Move or rename the publication so the folder path is " +
+                "$($longestPath.Length - 259) characters shorter: $fileFullName")
+
+            $fileFailCount++
+
+            continue
+        }
 
         try {
 
@@ -911,8 +935,10 @@ try {
 
                 try {
 
+                    # [string]: Publisher 2010's SaveAs hangs when handed
+                    # Join-Path's wrapped PowerShell object instead of a string.
                     $doc.SaveAs(
-                        $htmlBasePath,
+                        [string]$htmlBasePath,
                         $HTML_FILTERED_FORMAT,
                         $false
                     )
